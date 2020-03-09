@@ -2,6 +2,7 @@ package com.invoicecore.item.invoicecore.item.dataprovider.dao;
 
 import com.invoicecore.item.invoicecore.item.domain.pojo.ItemCategory;
 import com.invoicecore.item.invoicecore.item.domain.pojo.ItemSpec;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Table
 @Getter
+@Builder
 @Entity(name = "item")
 public class ItemDao {
 
@@ -22,7 +24,7 @@ public class ItemDao {
 
     private String sku;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "items")
     private List<ItemCategoryDao> categories;
 
     @ManyToMany(fetch = FetchType.LAZY)

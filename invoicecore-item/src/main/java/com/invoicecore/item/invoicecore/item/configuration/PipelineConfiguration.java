@@ -18,4 +18,11 @@ public class PipelineConfiguration {
         handlers.add(getItemHandler);
         return new IPipeline(handlers);
     }
+
+    @Bean(name = "saveItemPipeline")
+    public IPipeline saveItemPipeline(@Qualifier("saveItemHandler") Handler saveItemHandler) {
+        List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(saveItemHandler);
+        return new IPipeline(handlers);
+    }
 }

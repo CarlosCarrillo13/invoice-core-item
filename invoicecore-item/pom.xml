@@ -68,6 +68,12 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.pipecommons</groupId>
+			<artifactId>pipecommons</artifactId>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/local/commons.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

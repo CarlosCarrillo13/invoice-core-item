@@ -3,18 +3,18 @@ package com.invoicecore.item.invoicecore.item.entrypoint.rest;
 import com.invoicecore.item.invoicecore.item.dataprovider.service.ItemService;
 import com.invoicecore.item.invoicecore.item.domain.pojo.Item;
 import com.invoicecore.item.invoicecore.item.domain.usecase.GetItemUseCase;
+import com.invoicecore.item.invoicecore.item.domain.usecase.SaveItemUseCase;
 import com.invoicecore.item.invoicecore.item.entrypoint.dto.ItemDto;
 import com.invoicecore.item.invoicecore.item.util.context.ItemContext;
 import com.invoicecore.item.invoicecore.item.util.mappers.Mapper;
 import context.EnumMessageContext;
 import context.MessageContext;
+import exceptions.MessageContextException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/item")
@@ -22,17 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class ItemController {
 
     private final Mapper<Item, ItemDto> itemToItemDtoMapper;
+    private final Mapper<ItemDto, Item> itemDtoItemMapper;
     MessageContext messageContext = new EnumMessageContext<>(ItemContext.class);
     private final GetItemUseCase getItemUseCase;
+    private final SaveItemUseCase saveItemUseCase;
 
     @Autowired
     ItemService itemService;
 
     @GetMapping("/by-id/{sku}")
-    public ResponseEntity getItemBySku(@PathVariable String SKU) {
+    public ResponseEntity getItemBySku(@PathVariable String sku) throws MessageContextException {
 
-        messageContext.addItem(ItemContext.ITEM, SKU);
-        return null;
+        messageContext.addItem(ItemContext.SKU, sku);
+        getItemUseCase.handle(messageContext);
+        return new ResponseEntity<>(itemToItemDtoMapper.map((Item) messageContext.getitem(ItemContext.ITEM, Item.class)), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity saveItem(@RequestBody ItemDto itemDto) {
+
+        messageContext.addItem(ItemContext.ITEM, itemDtoItemMapper.map(itemDto));
+        saveItemUseCase.handle(messageContext);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }

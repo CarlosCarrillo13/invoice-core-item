@@ -1,10 +1,6 @@
 package com.invoicecore.item.invoicecore.item.dataprovider.dao;
 
-import com.invoicecore.item.invoicecore.item.domain.pojo.Item;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,7 +10,8 @@ import java.util.List;
 @Setter
 @Builder
 @RequiredArgsConstructor
-@Entity(name = "item_category")
+@AllArgsConstructor
+@Entity(name = "category")
 public class ItemCategoryDao {
 
     @Id
@@ -26,5 +23,5 @@ public class ItemCategoryDao {
     private String displayName;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private List<Item> items;
+    private List<ItemDao> items;
 }

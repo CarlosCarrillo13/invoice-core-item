@@ -6,6 +6,7 @@ import com.invoicecore.item.invoicecore.item.domain.pojo.Item;
 import com.invoicecore.item.invoicecore.item.util.client.Client;
 import com.invoicecore.item.invoicecore.item.util.context.ItemContext;
 import com.invoicecore.item.invoicecore.item.util.mappers.Mapper;
+
 import context.MessageContext;
 import exceptions.MessageContextException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ItemClient implements Client {
     ItemRepository itemRepository;
 
     private final Mapper<ItemDao, Item> itemDaoToItemMapper;
+    private final Mapper<Item, ItemDao> itemItemDaoMapper;
 
     public void getBySku(MessageContext messageContext) throws MessageContextException {
         String sku = (String) messageContext.getitem(ItemContext.SKU, String.class);
@@ -39,6 +41,9 @@ public class ItemClient implements Client {
 
     @Override
     public void save(MessageContext messageContext) throws MessageContextException {
+
+        Item item = (Item) messageContext.getitem(ItemContext.ITEM, Item.class);
+        itemRepository.save(itemItemDaoMapper.map(item));
 
     }
 

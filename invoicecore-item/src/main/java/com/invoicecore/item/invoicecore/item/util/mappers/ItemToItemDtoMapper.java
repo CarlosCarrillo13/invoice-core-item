@@ -5,12 +5,12 @@ import com.invoicecore.item.invoicecore.item.entrypoint.dto.ItemDto;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ItemToItemDtoMapper implements Mapper<ItemDto, Item> {
+public class ItemToItemDtoMapper implements Mapper<Item, ItemDto> {
+
 
     @Override
-    public Item map(ItemDto input) {
+    public ItemDto map(Item input) {
 
-        //TODO: mapper
-        return null;
+        return ItemDto.builder().name(input.getName()).sku(input.getSku()).build();
     }
 }

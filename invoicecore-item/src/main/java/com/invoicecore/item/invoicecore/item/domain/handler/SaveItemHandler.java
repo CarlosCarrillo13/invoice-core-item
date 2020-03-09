@@ -7,14 +7,15 @@ import handlers.Handler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service("getItemHandler")
+@Service("saveItemHandler")
 @RequiredArgsConstructor
-public class GetItemHandler implements Handler {
+public class SaveItemHandler implements Handler {
 
     private final ItemAdapter itemAdapter;
 
     @Override
     public void execute(MessageContext messageContext) throws MessageContextException {
-        itemAdapter.getItem(messageContext);
+
+        itemAdapter.saveItem(messageContext);
     }
 }
