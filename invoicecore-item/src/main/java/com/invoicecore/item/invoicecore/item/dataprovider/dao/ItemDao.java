@@ -1,15 +1,15 @@
 package com.invoicecore.item.invoicecore.item.dataprovider.dao;
 
-import com.invoicecore.item.invoicecore.item.domain.pojo.ItemCategory;
-import com.invoicecore.item.invoicecore.item.domain.pojo.ItemSpec;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Table
 @Getter
+@Setter
 @Builder
 @Entity(name = "item")
 public class ItemDao {
@@ -24,7 +24,8 @@ public class ItemDao {
 
     private String sku;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "items")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "item_category")
     private List<ItemCategoryDao> categories;
 
     @ManyToMany(fetch = FetchType.LAZY)

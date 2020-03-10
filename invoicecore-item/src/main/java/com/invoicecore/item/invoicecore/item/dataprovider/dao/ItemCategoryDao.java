@@ -22,6 +22,6 @@ public class ItemCategoryDao {
 
     private String displayName;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "categories")
     private List<ItemDao> items;
 }

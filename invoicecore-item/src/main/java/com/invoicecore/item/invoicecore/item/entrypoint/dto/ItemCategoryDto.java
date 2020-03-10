@@ -9,14 +9,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ItemDto {
+public class ItemCategoryDto {
 
     private String name;
 
-    private String sku;
+    private String displayName;
 
-    private String uuid;
-
-    private List<Long> categories;
-
+    private List<ItemDto> items;
 }

@@ -20,9 +20,18 @@ public class PipelineConfiguration {
     }
 
     @Bean(name = "saveItemPipeline")
-    public IPipeline saveItemPipeline(@Qualifier("saveItemHandler") Handler saveItemHandler) {
+    public IPipeline saveItemPipeline(@Qualifier("saveItemHandler") Handler saveItemHandler,
+                                      @Qualifier("getCategoriesHandler") Handler getCategoriesHandler) {
         List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(getCategoriesHandler);
         handlers.add(saveItemHandler);
+        return new IPipeline(handlers);
+    }
+
+    @Bean(name = "saveCategoryPipeline")
+    public IPipeline saveCategoryPipeline(@Qualifier("saveCategoryHandler") Handler saveCategoryHandler) {
+        List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(saveCategoryHandler);
         return new IPipeline(handlers);
     }
 }

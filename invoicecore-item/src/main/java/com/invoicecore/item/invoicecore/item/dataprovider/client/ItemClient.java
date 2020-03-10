@@ -1,5 +1,6 @@
 package com.invoicecore.item.invoicecore.item.dataprovider.client;
 
+import com.invoicecore.item.invoicecore.item.dataprovider.dao.ItemCategoryDao;
 import com.invoicecore.item.invoicecore.item.dataprovider.dao.ItemDao;
 import com.invoicecore.item.invoicecore.item.dataprovider.repos.ItemRepository;
 import com.invoicecore.item.invoicecore.item.domain.pojo.Item;
@@ -12,6 +13,8 @@ import exceptions.MessageContextException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +46,10 @@ public class ItemClient implements Client {
     public void save(MessageContext messageContext) throws MessageContextException {
 
         Item item = (Item) messageContext.getitem(ItemContext.ITEM, Item.class);
-        itemRepository.save(itemItemDaoMapper.map(item));
+        List<ItemCategoryDao> categoryDaos = (List<ItemCategoryDao>) messageContext.getitem(ItemContext.CATEGORY, List.class);
+        ItemDao itemDao = itemItemDaoMapper.map(item);
+        itemDao.setCategories(categoryDaos);
+        itemRepository.save(itemDao);
 
     }
 

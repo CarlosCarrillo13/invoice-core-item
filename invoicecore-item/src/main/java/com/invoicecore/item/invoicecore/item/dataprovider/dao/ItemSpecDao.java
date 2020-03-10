@@ -1,9 +1,7 @@
 package com.invoicecore.item.invoicecore.item.dataprovider.dao;
 
 import com.invoicecore.item.invoicecore.item.util.enums.MeasureUnit;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,7 +9,8 @@ import javax.persistence.*;
 @Entity(name = "spec")
 @Getter
 @Setter
-@RequiredArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ItemSpecDao {
 
     @Id

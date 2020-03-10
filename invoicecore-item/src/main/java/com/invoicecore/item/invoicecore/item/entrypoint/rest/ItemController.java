@@ -43,6 +43,7 @@ public class ItemController {
     public ResponseEntity saveItem(@RequestBody ItemDto itemDto) {
 
         messageContext.addItem(ItemContext.ITEM, itemDtoItemMapper.map(itemDto));
+        messageContext.addItem(ItemContext.CATEGORY_LIST, itemDto.getCategories());
         saveItemUseCase.handle(messageContext);
         return new ResponseEntity(HttpStatus.CREATED);
     }
