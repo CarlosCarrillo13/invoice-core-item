@@ -5,12 +5,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
+
+
 @Table
-@Entity(name = "spec")
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
+@Entity(name = "spec")
 public class ItemSpecDao {
 
     @Id

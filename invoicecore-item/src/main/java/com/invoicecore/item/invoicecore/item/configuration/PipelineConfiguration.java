@@ -34,4 +34,12 @@ public class PipelineConfiguration {
         handlers.add(saveCategoryHandler);
         return new IPipeline(handlers);
     }
+
+
+    @Bean(name = "saveSpecPipeline")
+    public IPipeline saveSpecPipeline(@Qualifier("saveSpecHandler") Handler saveSpecHandler) {
+        List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(saveSpecHandler);
+        return new IPipeline(handlers);
+    }
 }

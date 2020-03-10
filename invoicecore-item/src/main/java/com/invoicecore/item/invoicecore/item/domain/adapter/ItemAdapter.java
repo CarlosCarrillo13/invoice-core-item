@@ -18,11 +18,15 @@ public class ItemAdapter {
     public void getItem(MessageContext messageContext) throws MessageContextException {
 
         itemClient.getBySku(messageContext);
-
     }
 
     public void saveItem(MessageContext messageContext) throws MessageContextException {
 
         itemClient.save(messageContext);
+    }
+
+    public void saveSpec(MessageContext messageContext) throws MessageContextException {
+
+        itemClient.setSpecForItem(messageContext);
     }
 }

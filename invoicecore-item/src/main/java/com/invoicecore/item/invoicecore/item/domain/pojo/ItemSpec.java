@@ -2,22 +2,33 @@ package com.invoicecore.item.invoicecore.item.domain.pojo;
 
 import com.invoicecore.item.invoicecore.item.util.enums.MeasureUnit;
 
+import java.math.BigDecimal;
+
 public class ItemSpec {
 
     private String displayName;
 
     private Long size;
 
+    private Long quantity;
+
     private MeasureUnit measureUnit;
 
     private boolean shippable;
 
+    private BigDecimal unitPrize;
 
-    ItemSpec(String displayName, Long size, MeasureUnit measureUnit, boolean shippable) {
+
+    public ItemSpec(String displayName, Long size, Long quantity, MeasureUnit measureUnit, boolean shippable, BigDecimal unitPrize) {
         this.displayName = displayName;
         this.size = size;
+        this.quantity = quantity;
         this.measureUnit = measureUnit;
         this.shippable = shippable;
+        this.unitPrize = unitPrize;
+    }
+
+    public ItemSpec() {
     }
 
     public static ItemSpecBuilder builder() {
@@ -32,12 +43,20 @@ public class ItemSpec {
         return this.size;
     }
 
+    public Long getQuantity() {
+        return this.quantity;
+    }
+
     public MeasureUnit getMeasureUnit() {
         return this.measureUnit;
     }
 
     public boolean isShippable() {
         return this.shippable;
+    }
+
+    public BigDecimal getUnitPrize() {
+        return this.unitPrize;
     }
 
     public void setDisplayName(String displayName) {
@@ -48,6 +67,10 @@ public class ItemSpec {
         this.size = size;
     }
 
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
     public void setMeasureUnit(MeasureUnit measureUnit) {
         this.measureUnit = measureUnit;
     }
@@ -56,15 +79,21 @@ public class ItemSpec {
         this.shippable = shippable;
     }
 
+    public void setUnitPrize(BigDecimal unitPrize) {
+        this.unitPrize = unitPrize;
+    }
+
     public String toString() {
-        return "ItemSpec(displayName=" + this.getDisplayName() + ", size=" + this.getSize() + ", measureUnit=" + this.getMeasureUnit() + ", shippable=" + this.isShippable() + ")";
+        return "ItemSpec(displayName=" + this.getDisplayName() + ", size=" + this.getSize() + ", quantity=" + this.getQuantity() + ", measureUnit=" + this.getMeasureUnit() + ", shippable=" + this.isShippable() + ", unitPrize=" + this.getUnitPrize() + ")";
     }
 
     public static class ItemSpecBuilder {
         private String displayName;
         private Long size;
+        private Long quantity;
         private MeasureUnit measureUnit;
         private boolean shippable;
+        private BigDecimal unitPrize;
 
         ItemSpecBuilder() {
         }
@@ -79,6 +108,11 @@ public class ItemSpec {
             return this;
         }
 
+        public ItemSpec.ItemSpecBuilder quantity(Long quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+
         public ItemSpec.ItemSpecBuilder measureUnit(MeasureUnit measureUnit) {
             this.measureUnit = measureUnit;
             return this;
@@ -89,12 +123,17 @@ public class ItemSpec {
             return this;
         }
 
+        public ItemSpec.ItemSpecBuilder unitPrize(BigDecimal unitPrize) {
+            this.unitPrize = unitPrize;
+            return this;
+        }
+
         public ItemSpec build() {
-            return new ItemSpec(displayName, size, measureUnit, shippable);
+            return new ItemSpec(displayName, size, quantity, measureUnit, shippable, unitPrize);
         }
 
         public String toString() {
-            return "ItemSpec.ItemSpecBuilder(displayName=" + this.displayName + ", size=" + this.size + ", measureUnit=" + this.measureUnit + ", shippable=" + this.shippable + ")";
+            return "ItemSpec.ItemSpecBuilder(displayName=" + this.displayName + ", size=" + this.size + ", quantity=" + this.quantity + ", measureUnit=" + this.measureUnit + ", shippable=" + this.shippable + ", unitPrize=" + this.unitPrize + ")";
         }
     }
 }

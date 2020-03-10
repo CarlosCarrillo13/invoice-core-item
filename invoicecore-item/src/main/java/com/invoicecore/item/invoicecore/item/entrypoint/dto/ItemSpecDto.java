@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Builder
@@ -18,4 +20,10 @@ public class ItemSpecDto {
     private MeasureUnit measureUnit;
 
     private boolean shippable;
+
+    private Long itemId;
+
+    private Long quantity;
+
+    private BigDecimal unitPrize;
 }

@@ -17,6 +17,8 @@ public class ItemDto {
 
     private String uuid;
 
+    private String barcode;
+
     private List<Long> categories;
 
 }

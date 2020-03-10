@@ -1,8 +1,6 @@
 package com.invoicecore.item.invoicecore.item.dataprovider.dao;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "item")
 public class ItemDao {
 
@@ -28,7 +28,7 @@ public class ItemDao {
     @JoinTable(name = "item_category")
     private List<ItemCategoryDao> categories;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ItemSpecDao> specs;
 
 }

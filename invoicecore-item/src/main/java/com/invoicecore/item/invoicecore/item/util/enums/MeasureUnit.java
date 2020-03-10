@@ -10,7 +10,8 @@ public enum MeasureUnit {
     CENTIMETER("cm"),
     MILLIMETER("mm"),
     LITER("lt"),
-    METER("mt");
+    METER("mt"),
+    UNITS("UNDS");
 
     private final String measureName;
 }
