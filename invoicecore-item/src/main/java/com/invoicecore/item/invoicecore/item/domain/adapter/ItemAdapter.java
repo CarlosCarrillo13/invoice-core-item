@@ -29,4 +29,9 @@ public class ItemAdapter {
 
         itemClient.setSpecForItem(messageContext);
     }
+
+    public void getItemsByCategory(MessageContext messageContext) throws MessageContextException {
+
+        itemClient.getItemsByCategory(messageContext);
+    }
 }

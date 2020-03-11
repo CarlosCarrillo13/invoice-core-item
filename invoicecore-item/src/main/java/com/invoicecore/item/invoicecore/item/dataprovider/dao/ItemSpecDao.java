@@ -4,7 +4,7 @@ import com.invoicecore.item.invoicecore.item.util.enums.MeasureUnit;
 import lombok.*;
 
 import javax.persistence.*;
-
+import java.math.BigDecimal;
 
 
 @Table
@@ -27,4 +27,8 @@ public class ItemSpecDao {
     private MeasureUnit measureUnit;
 
     private boolean shippable;
+
+    private BigDecimal unitPrize;
+
+    private Long quantity;
 }

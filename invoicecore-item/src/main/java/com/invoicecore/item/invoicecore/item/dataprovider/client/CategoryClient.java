@@ -34,4 +34,10 @@ public class CategoryClient {
         List<ItemCategoryDao> categories = categoryRepository.findAllById(categoryIds);
         messageContext.addItem(ItemContext.CATEGORY, categories);
     }
+
+    public void getCategoryByDisplayName(MessageContext messageContext) throws MessageContextException {
+        String categoryName = (String)messageContext.getitem(ItemContext.CATEGORY_NAME, String.class);
+        ItemCategoryDao itemCategoryDao = categoryRepository.findByDisplayName(categoryName);
+        messageContext.addItem(ItemContext.CATEGORY, itemCategoryDao);
+    }
 }

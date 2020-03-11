@@ -1,6 +1,5 @@
 package com.invoicecore.item.invoicecore.item.entrypoint.rest;
 
-import UseCases.UseCase;
 import com.invoicecore.item.invoicecore.item.domain.pojo.ItemCategory;
 import com.invoicecore.item.invoicecore.item.domain.usecase.SaveCategoryUseCase;
 import com.invoicecore.item.invoicecore.item.entrypoint.dto.ItemCategoryDto;

@@ -42,4 +42,15 @@ public class PipelineConfiguration {
         handlers.add(saveSpecHandler);
         return new IPipeline(handlers);
     }
+
+    @Bean(name = "getItemsByCategoryNamePipeline")
+    public IPipeline getItemsByCategoryNamePipeline(@Qualifier("getCategoryByNameHandler") Handler getCategoryByNameHandler,
+                                                    @Qualifier("getItemsByCategoryHandler") Handler getItemsByCategoryHandler) {
+
+        List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(getCategoryByNameHandler);
+        handlers.add(getItemsByCategoryHandler);
+        return new IPipeline(handlers);
+
+    }
 }

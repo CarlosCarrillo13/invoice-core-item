@@ -9,7 +9,11 @@ public class ItemSpecToItemSpecDaoMapper implements Mapper<ItemSpec, ItemSpecDao
     @Override
     public ItemSpecDao map(ItemSpec input) {
         return ItemSpecDao.builder().displayName(input.getDisplayName())
+                .size(input.getSize())
+                .quantity(input.getQuantity())
                 .measureUnit(input.getMeasureUnit())
-                .shippable(input.isShippable()).build();
+                .shippable(input.isShippable())
+                .unitPrize(input.getUnitPrize())
+                .build();
     }
 }

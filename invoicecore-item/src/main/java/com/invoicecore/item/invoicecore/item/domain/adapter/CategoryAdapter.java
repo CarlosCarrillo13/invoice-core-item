@@ -23,4 +23,9 @@ public class CategoryAdapter {
 
         categoryClient.getCategories(messageContext);
     }
+
+    public void getCategoryByName(MessageContext messageContext) throws MessageContextException {
+
+        categoryClient.getCategoryByDisplayName(messageContext);
+    }
 }

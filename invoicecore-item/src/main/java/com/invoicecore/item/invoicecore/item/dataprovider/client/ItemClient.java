@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,15 @@ public class ItemClient implements Client {
         ItemDao itemDao = itemRepository.getOne((Long) messageContext.getitem(ItemContext.ITEM_ID, Long.class));
         itemDao.getSpecs().add(itemSpecDao);
         itemRepository.save(itemDao);
+
+    }
+
+    @Transactional
+    public void getItemsByCategory(MessageContext messageContext) throws MessageContextException {
+        ItemCategoryDao itemCategoryDao = (ItemCategoryDao) messageContext.getitem(ItemContext.CATEGORY, ItemCategoryDao.class);
+        List<ItemDao> itemsDao = itemRepository.findAllByCategoriesContains(itemCategoryDao);
+        messageContext.addItem(ItemContext.ITEM_LIST, itemsDao.stream().map(
+                itemDaoToItemMapper::map).collect(Collectors.toList()));
 
     }
 

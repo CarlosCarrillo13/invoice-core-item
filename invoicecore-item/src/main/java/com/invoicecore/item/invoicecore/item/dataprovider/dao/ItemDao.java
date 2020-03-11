@@ -18,10 +18,13 @@ public class ItemDao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
     private String UUID;
 
+    @NonNull
     private String name;
 
+    @Column(unique = true)
     private String sku;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
