@@ -53,4 +53,11 @@ public class PipelineConfiguration {
         return new IPipeline(handlers);
 
     }
+
+    @Bean(name = "getItemsByNamePipeline")
+    public IPipeline getItemsByNamePipeline(@Qualifier("getItemsByNameHandler") Handler getItemsByNameHandler) {
+        List<handlers.Handler> handlers = new ArrayList<>();
+        handlers.add(getItemsByNameHandler);
+        return new IPipeline(handlers);
+    }
 }

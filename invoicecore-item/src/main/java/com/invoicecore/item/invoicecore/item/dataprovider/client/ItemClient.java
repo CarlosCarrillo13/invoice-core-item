@@ -9,11 +9,12 @@ import com.invoicecore.item.invoicecore.item.domain.pojo.ItemSpec;
 import com.invoicecore.item.invoicecore.item.util.client.Client;
 import com.invoicecore.item.invoicecore.item.util.context.ItemContext;
 import com.invoicecore.item.invoicecore.item.util.mappers.Mapper;
-
 import context.MessageContext;
 import exceptions.MessageContextException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,20 +40,18 @@ public class ItemClient implements Client {
 
     @Transactional
     public void setSpecForItem(MessageContext messageContext) throws MessageContextException {
-        ItemSpecDao itemSpecDao = itemSpecItemSpecDaoMapper.map((ItemSpec)messageContext.getitem(ItemContext.SPEC, ItemSpec.class));
+        ItemSpecDao itemSpecDao = itemSpecItemSpecDaoMapper.map((ItemSpec) messageContext.getitem(ItemContext.SPEC, ItemSpec.class));
         ItemDao itemDao = itemRepository.getOne((Long) messageContext.getitem(ItemContext.ITEM_ID, Long.class));
         itemDao.getSpecs().add(itemSpecDao);
         itemRepository.save(itemDao);
-
     }
 
     @Transactional
     public void getItemsByCategory(MessageContext messageContext) throws MessageContextException {
         ItemCategoryDao itemCategoryDao = (ItemCategoryDao) messageContext.getitem(ItemContext.CATEGORY, ItemCategoryDao.class);
-        List<ItemDao> itemsDao = itemRepository.findAllByCategoriesContains(itemCategoryDao);
-        messageContext.addItem(ItemContext.ITEM_LIST, itemsDao.stream().map(
-                itemDaoToItemMapper::map).collect(Collectors.toList()));
-
+        Pageable pageable = (Pageable)messageContext.getitem(ItemContext.PAGEABLE, Pageable.class);
+        Page<ItemDao> items = itemRepository.findAllByCategoriesContains(itemCategoryDao, pageable);
+        mapItems(items, messageContext);
     }
 
     @Override
@@ -73,11 +72,22 @@ public class ItemClient implements Client {
         ItemDao itemDao = itemItemDaoMapper.map(item);
         itemDao.setCategories(categoryDaos);
         itemRepository.save(itemDao);
-
     }
 
     @Override
     public void delete(MessageContext messageContext) throws MessageContextException {
 
+    }
+
+    public void getItemsByName(MessageContext messageContext) throws MessageContextException {
+        String itemName = (String) messageContext.getitem(ItemContext.ITEM_DISPLAY_NAME, String.class);
+        Pageable pageable = (Pageable)messageContext.getitem(ItemContext.PAGEABLE, Pageable.class);
+        Page<ItemDao> items = itemRepository.findAllByNameContaining(itemName, pageable);
+        mapItems(items, messageContext);
+    }
+
+    private void mapItems(Page<ItemDao> itemsDao, MessageContext messageContext) {
+        Page <Item> itemPage = itemsDao.map(itemDaoToItemMapper::map);
+        messageContext.addItem(ItemContext.ITEM_PAGE, itemPage);
     }
 }

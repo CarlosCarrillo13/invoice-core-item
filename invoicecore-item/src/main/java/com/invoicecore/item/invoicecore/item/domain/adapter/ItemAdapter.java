@@ -34,4 +34,8 @@ public class ItemAdapter {
 
         itemClient.getItemsByCategory(messageContext);
     }
+
+    public void getItemsByName(MessageContext messageContext) throws MessageContextException {
+        itemClient.getItemsByName(messageContext);
+    }
 }
